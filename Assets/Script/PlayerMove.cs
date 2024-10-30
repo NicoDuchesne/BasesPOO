@@ -26,7 +26,6 @@ public class PlayerMove : MonoBehaviour
 
     private void OnDestroy()
     {
-        _animator.SetBool("IsRunning", false);
         _moveInput.action.started -= StartMove;
         _moveInput.action.performed -= MovePerformed;
         _moveInput.action.canceled -= StopMove;
