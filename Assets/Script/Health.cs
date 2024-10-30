@@ -14,6 +14,8 @@ public class Health : MonoBehaviour
 
     [SerializeField] UnityEvent _onDie;
 
+    [SerializeField] Animator _animator;
+
     public event Action<int> OnTakeDamage;
     public event Action<int> OnGainHealth;
 
@@ -75,6 +77,7 @@ public class Health : MonoBehaviour
     //Loose HPs
     private void TakeDamage(int damage)
     {
+        
         //Guard
         if (damage <= 0)
         {
@@ -109,6 +112,8 @@ public class Health : MonoBehaviour
     IEnumerator DieRoutine()
     {
         Debug.Log("dying");
+        Destroy(GetComponent<PlayerMove>());
+        _animator.SetTrigger("Die");
         
         _onDie?.Invoke();
         yield return new WaitForSeconds(2f);
