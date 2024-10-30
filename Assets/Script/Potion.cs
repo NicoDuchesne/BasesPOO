@@ -7,7 +7,7 @@ public class Potion : Item
 
     protected override void Effect()
     {
-        _health.ReceiveHealth(_regen);
+        _health.ReceiveRegen(_regen);
     }
     
     

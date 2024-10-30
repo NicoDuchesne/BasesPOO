@@ -8,6 +8,7 @@ using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 public class PlayerMove : MonoBehaviour
 {
     [SerializeField] InputActionReference _moveInput;
+    [SerializeField] Animator _animator;
     [SerializeField] Rigidbody _rb;
     [SerializeField] float _speed;
 
@@ -33,6 +34,7 @@ public class PlayerMove : MonoBehaviour
     private void StartMove(InputAction.CallbackContext obj)
     {
         Debug.Log("Start");
+        _animator.SetBool("IsRunning", true);
 
         _movementRoutine = StartCoroutine(Move());
 
@@ -77,5 +79,6 @@ public class PlayerMove : MonoBehaviour
     {
         Debug.Log("Cancel");
         StopCoroutine(_movementRoutine);
+        _animator.SetBool("IsRunning", false);
     }
 }

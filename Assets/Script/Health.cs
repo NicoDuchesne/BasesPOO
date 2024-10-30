@@ -8,13 +8,17 @@ public class Health : MonoBehaviour
 {
     [SerializeField, ValidateInput(nameof(ValidateMaxHealth), "_maxValue must be beetween 1 and 1000 included")]
     private int _maxLife;
+    public int MaxLife => _maxLife;
 
     [ShowNonSerializedField] 
     private int _currentLife;
 
     [SerializeField] UnityEvent _onDie;
 
+    [SerializeField] Animator _animator;
+
     public event Action<int> OnTakeDamage;
+    public event Action<int> OnRegenHealth;
     public event Action<int> OnGainHealth;
 
     public int CurrentLife
@@ -45,17 +49,19 @@ public class Health : MonoBehaviour
     {
         _currentLife = _maxLife;
         OnTakeDamage += TakeDamage;
+        OnRegenHealth += RegenHealth;
         OnGainHealth += GainHealth;
     }
 
     private void OnDestroy()
     {
         OnTakeDamage -= TakeDamage;
+        OnRegenHealth -= RegenHealth;
         OnGainHealth -= GainHealth;
     }
 
     //Regen HPs
-    private void GainHealth(int regen)
+    private void RegenHealth(int regen)
     {
         //Guard
         if (regen <= 0)
@@ -67,14 +73,15 @@ public class Health : MonoBehaviour
         _currentLife = Mathf.Clamp(_currentLife + regen, 0, _maxLife);
     }
 
-    public void ReceiveHealth(int regen)
+    public void ReceiveRegen(int regen)
     {
-        OnGainHealth?.Invoke(regen);
+        OnRegenHealth?.Invoke(regen);
     }
 
     //Loose HPs
     private void TakeDamage(int damage)
     {
+        
         //Guard
         if (damage <= 0)
         {
@@ -95,6 +102,23 @@ public class Health : MonoBehaviour
         OnTakeDamage?.Invoke(damage);
     }
 
+    private void GainHealth(int gain)
+    {
+        //Guard
+        if (gain <= 0)
+        {
+            Debug.LogError("The health gained must be positiv");
+            return;
+        }
+
+        _maxLife += gain;
+    }
+
+    public void ReceiveHealth(int gain)
+    {
+        OnGainHealth?.Invoke(gain);
+    }
+
 
     //Death
     private void Die()
@@ -109,6 +133,8 @@ public class Health : MonoBehaviour
     IEnumerator DieRoutine()
     {
         Debug.Log("dying");
+        Destroy(GetComponent<PlayerMove>());
+        _animator.SetTrigger("Die");
         
         _onDie?.Invoke();
         yield return new WaitForSeconds(2f);
@@ -127,7 +153,7 @@ public class Health : MonoBehaviour
     [Button]
     private void TestGainHealth10()
     {
-        OnGainHealth?.Invoke(10);
+        OnRegenHealth?.Invoke(10);
     }
 
 
