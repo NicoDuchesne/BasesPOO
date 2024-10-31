@@ -7,15 +7,22 @@ using static Codice.Client.Commands.WkTree.WorkspaceTreeNode;
 
 public class PlayerMove : MonoBehaviour
 {
-    [SerializeField] InputActionReference _moveInput;
-    [SerializeField] Animator _animator;
-    [SerializeField] Rigidbody _rb;
-    [SerializeField] float _speed;
+    [SerializeField] private InputActionReference _moveInput;
+    [SerializeField] private Animator _animator;
+    [SerializeField] private Rigidbody _rb;
+    [SerializeField, ValidateInput(nameof(ValidateSpeed), "_maxValue must be beetween 1 and 3000 included")]
+    private float _speed;
 
-    [SerializeField] bool _isCameraBased;
+    [SerializeField] private bool _isCameraBased;
     [SerializeField, ShowIf("_isCameraBased")] Camera _cam;
 
     Coroutine _movementRoutine;
+    private bool ValidateSpeed() => _speed > 0 && _speed <= 3000;
+
+    private void Reset()
+    {
+        _speed = 1000;
+    }
 
     private void Start()
     {

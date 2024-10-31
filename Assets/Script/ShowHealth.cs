@@ -38,7 +38,7 @@ public class ShowHealth : MonoBehaviour
     {
         _slider.maxValue = _health.MaxLife;
 
-
+        //on agrandit la taille de la lifebar proportionellement aux hp gagnés
         float temp = _lifeBarSize + ((float)amount / (float)_initialLife * (float)_initialLifeBarSize);
         _lifeBarSize = (int)temp;
 
