@@ -6,11 +6,11 @@ using System;
 
 public class MyTests
 {
-    // A Test behaves as an ordinary method
+    // A Test behaves as an ordinary method test
     [UnityTest]
     public IEnumerator MyTestsSimplePasses()
     {
-        //Arrange
+        //Arrange 
         GameObject perso = new GameObject();
         var health = perso.AddComponent<Health>();
 
