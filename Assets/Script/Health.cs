@@ -66,8 +66,11 @@ public class Health : MonoBehaviour
         //Guard
         if (regen <= 0)
         {
-            Debug.LogError("The health regenerated must be positiv");
-            return;
+            //erreur gérée à l'ancienne
+            //Debug.LogError("The health regenerated must be positiv");
+            //return;
+
+            throw new ArgumentException("The health regenerated must be positiv");
         }
 
         _currentLife = Mathf.Clamp(_currentLife + regen, 0, _maxLife);
