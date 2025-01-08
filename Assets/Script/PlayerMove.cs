@@ -40,7 +40,6 @@ public class PlayerMove : MonoBehaviour
 
     private void StartMove(InputAction.CallbackContext obj)
     {
-        Debug.Log("Start");
         _animator.SetBool("IsRunning", true);
 
         _movementRoutine = StartCoroutine(Move());
@@ -79,12 +78,10 @@ public class PlayerMove : MonoBehaviour
 
     private void MovePerformed(InputAction.CallbackContext obj)
     {
-        Debug.Log("Perform");
     }
 
     private void StopMove(InputAction.CallbackContext obj)
     {
-        Debug.Log("Cancel");
         StopCoroutine(_movementRoutine);
         _animator.SetBool("IsRunning", false);
     }
