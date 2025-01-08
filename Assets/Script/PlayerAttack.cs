@@ -34,7 +34,6 @@ public class PlayerAttack : MonoBehaviour
 
     private void StartAttack(InputAction.CallbackContext obj)
     {
-        Debug.Log("Attack");
         _animator.SetBool("IsAttacking", true);
         _attack.SetActive(true);
         _attackRoutine = StartCoroutine(Attack());
@@ -44,7 +43,6 @@ public class PlayerAttack : MonoBehaviour
         {
             while (true)
             {
-                Debug.Log("Attacking");
                 yield return new WaitForFixedUpdate();
             }
         }
